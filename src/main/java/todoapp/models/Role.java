@@ -5,6 +5,6 @@ package todoapp.models;
  * @version 17/03/2017
  */
 public enum Role {
-    ADMIN,
-    STUDENT
+    ROLE_ADMIN,
+    ROLE_STUDENT
 }

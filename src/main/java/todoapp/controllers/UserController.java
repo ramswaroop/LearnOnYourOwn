@@ -22,7 +22,7 @@ public class UserController {
     UserRepository userRepository;
 
     //return all data
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<User> getAllUsers() {
         return userRepository.findAll();

@@ -5,8 +5,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import todoapp.models.User;
 import todoapp.repositories.UserRepository;
+import todoapp.services.CurrentUserDetailsService;
 
 @SpringBootApplication
 public class TodoApplication  {
@@ -15,15 +21,27 @@ public class TodoApplication  {
         SpringApplication.run(TodoApplication.class, args);
            
     }
-//    public void run(String... args) throws Exception {
-//    	implements CommandLineRunner
-//    	repo.save(new User("sean@sean.ie", "password", "seaniemc", "Sean Mc", 1));
-//    	repo.save(new User("gary@gary.ie", "password", "gary", "Gary Mc", 2));
-//    	
-//    	System.out.println("Customers found with findAll():");
-//		System.out.println("-------------------------------");
-//    	for (User customer : repo.findAll()) {
-//			System.out.println(customer);
-//		}
-//    }
+
+    @EnableWebSecurity
+    @EnableGlobalMethodSecurity(prePostEnabled = true)
+    class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+        @Autowired
+        CurrentUserDetailsService currentUserDetailsService;
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .antMatchers("/", "/vendor/**", "/app/**", "/assets/**").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .httpBasic();
+        }
+
+        @Autowired
+        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(currentUserDetailsService);
+        }
+    }
 }
