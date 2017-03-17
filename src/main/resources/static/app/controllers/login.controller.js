@@ -22,7 +22,7 @@ todoApp.controller('LoginCtrl',function($scope,$rootScope, $http, $state) {
       callback && callback();
     });
 
-  }
+  };
 
   authenticate();
   $scope.credentials = {};
@@ -37,4 +37,4 @@ todoApp.controller('LoginCtrl',function($scope,$rootScope, $http, $state) {
         }
       });
   };
-}]);
+});

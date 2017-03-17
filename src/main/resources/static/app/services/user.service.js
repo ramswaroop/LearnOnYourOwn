@@ -6,7 +6,7 @@ todoApp.factory('Users', ['$http', function($http) {
 		},
 
 		create: function(userData, callback) {
-      	$http.post('/api/users', userData).then(function (res) {
+      	$http.post('/api/users/create', userData).then(function (res) {
             	return callback(res.data); 
       		}, 'error')
 		},

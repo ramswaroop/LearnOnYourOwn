@@ -10,8 +10,6 @@ import todoapp.repositories.UserRepository;
 
 @SpringBootApplication
 public class TodoApplication  {
-//	@Autowired
-//	 UserRepository repo;
      
     public static void main(String[] args) {
         SpringApplication.run(TodoApplication.class, args);
